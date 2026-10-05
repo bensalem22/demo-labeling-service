@@ -23,6 +23,25 @@ The Stop hook is a reminder in the VS Code Local harness, not a PR webhook.
 The PR workflow works regardless of whether the developer opens the PR through
 VS Code, a browser or GitHub CLI.
 
+## Annotation validation
+
+The importable `labeling_service.validate_annotation` function validates one
+synthetic annotation against the schema 1.0 half-open pixel-edge contract. Invalid
+input raises `AnnotationValidationError` with stable code-and-field details.
+Validation does not mutate input, persist data, review labels, release datasets,
+train models or control vehicles.
+
+Run the standard-library test suite from PowerShell:
+
+```powershell
+.\.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+Inspect synthetic inputs under [examples/](examples/). See the
+[public validation contract](specs/001-validate-bounding-boxes/contracts/validation.md)
+and [validation quickstart](specs/001-validate-bounding-boxes/quickstart.md) for
+the exact interface and acceptance scenarios.
+
 ## Local specialization
 
 Edit the service constitution source, not the generated effective constitution.
