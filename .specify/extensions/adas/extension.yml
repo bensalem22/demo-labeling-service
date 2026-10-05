@@ -1,0 +1,31 @@
+schema_version: "1.0"
+extension:
+  id: adas
+  name: ADAS requirements and learning
+  version: "1.0.0"
+  description: Read-only DOORS discovery and reviewed session learning for an ADAS toolchain.
+  author: Bosch demo authors
+  license: LicenseRef-Demo
+requires:
+  speckit_version: "==1.1.0"
+provides:
+  commands:
+    - name: speckit.adas.requirements
+      file: commands/requirements.md
+      description: Resolve and baseline requirements through the approved DOORS MCP tools.
+    - name: speckit.adas.capture
+      file: commands/capture.md
+      description: Draft a sanitized session decision record for developer approval.
+hooks:
+  before_specify:
+    command: speckit.adas.requirements
+    optional: false
+    description: Resolve authoritative requirement content before writing a feature spec.
+  before_plan:
+    command: speckit.adas.requirements
+    optional: false
+    description: Recheck baseline, status and requirement provenance before planning.
+  after_implement:
+    command: speckit.adas.capture
+    optional: false
+    description: Prepare a reviewed learning input before opening the feature PR.

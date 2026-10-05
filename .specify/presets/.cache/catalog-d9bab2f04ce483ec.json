@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "presets": {
+    "adas-product": {
+      "id": "adas-product",
+      "name": "ADAS end-to-end toolchain",
+      "version": "1.0.0",
+      "description": "Shared architecture and data contracts across an ADAS development toolchain.",
+      "author": "Bosch demo authors",
+      "license": "LicenseRef-Demo",
+      "repository": "https://github.com/demo-owner/adas-governance",
+      "download_url": "http://127.0.0.1:49172/adas-product-1.0.0.zip",
+      "sha256": "5a7dd45c88fbae6e81e81afbc990d37e55d580465b7cd73f0e434e209fc8b2d2",
+      "requires": {
+        "speckit_version": "==1.1.0"
+      }
+    },
+    "engineering-department": {
+      "id": "engineering-department",
+      "name": "Engineering department governance",
+      "version": "1.0.0",
+      "description": "Non-negotiable traceability, assurance, data handling and learning obligations.",
+      "author": "Bosch demo authors",
+      "license": "LicenseRef-Demo",
+      "repository": "https://github.com/demo-owner/adas-governance",
+      "download_url": "http://127.0.0.1:49172/engineering-department-1.0.0.zip",
+      "sha256": "376440143f7d46c9fb0acf6c9e73fa713463ed9a95d2dc13503f374fa8b2ff2b",
+      "requires": {
+        "speckit_version": "==1.1.0"
+      }
+    }
+  }
+}

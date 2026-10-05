@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python tools/session_hook.py",
+        "windows": "python tools\\session_hook.py",
+        "timeout": 10
+      }
+    ]
+  }
+}

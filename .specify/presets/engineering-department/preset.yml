@@ -1,0 +1,20 @@
+schema_version: "1.0"
+preset:
+  id: engineering-department
+  name: Engineering department governance
+  version: "1.0.0"
+  description: Non-negotiable traceability, assurance, data handling and learning obligations.
+  author: Bosch demo authors
+  license: LicenseRef-Demo
+requires:
+  speckit_version: "==1.1.0"
+provides:
+  templates:
+    - type: template
+      name: spec-template
+      file: templates/spec-addendum.md
+      strategy: prepend
+    - type: template
+      name: plan-template
+      file: templates/plan-addendum.md
+      strategy: prepend

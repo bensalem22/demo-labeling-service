@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "presets": {
+    "engineering-department": {
+      "version": "1.0.0",
+      "source": {
+        "kind": "catalog",
+        "catalog": "bosch-demo-release"
+      },
+      "manifest_hash": "sha256:2da949e88d3bf710adddf96c0dfadc153fdd12e234ea22cd950b0c8a14bfb3f0",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {},
+      "registered_skills": {},
+      "installed_at": "2026-10-05T19:04:00.863268+00:00"
+    },
+    "adas-product": {
+      "version": "1.0.0",
+      "source": {
+        "kind": "catalog",
+        "catalog": "bosch-demo-release"
+      },
+      "manifest_hash": "sha256:d5c46cc3ed0712fbffec0f3bc5e8a332b33852a2cce06dbee17155f1fbeb0f1e",
+      "enabled": true,
+      "priority": 20,
+      "registered_commands": {},
+      "registered_skills": {},
+      "installed_at": "2026-10-05T19:04:00.929989+00:00"
+    }
+  }
+}

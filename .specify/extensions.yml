@@ -1,0 +1,33 @@
+installed:
+- adas
+settings:
+  auto_execute_hooks: true
+hooks:
+  before_specify:
+  - extension: adas
+    command: speckit.adas.requirements
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.adas.requirements?
+    description: Resolve authoritative requirement content before writing a feature
+      spec.
+    condition: null
+  before_plan:
+  - extension: adas
+    command: speckit.adas.requirements
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.adas.requirements?
+    description: Recheck baseline, status and requirement provenance before planning.
+    condition: null
+  after_implement:
+  - extension: adas
+    command: speckit.adas.capture
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.adas.capture?
+    description: Prepare a reviewed learning input before opening the feature PR.
+    condition: null

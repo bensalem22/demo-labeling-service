@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "adas": {
+      "version": "1.0.0",
+      "source": {
+        "kind": "catalog",
+        "catalog": "bosch-demo-release"
+      },
+      "manifest_hash": "sha256:cd6d97baf160bc166a8d4dc898f1c9dba01225b480b5833d9596de7a0991b33c",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {},
+      "registered_skills": [
+        "speckit-adas-requirements",
+        "speckit-adas-capture"
+      ],
+      "installed_at": "2026-10-05T19:04:00.736464+00:00"
+    }
+  }
+}

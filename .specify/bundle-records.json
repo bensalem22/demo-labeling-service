@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-10-05T19:04:00Z",
+  "bundles": [
+    {
+      "bundle_id": "adas-developer",
+      "version": "1.0.0",
+      "installed_at": "2026-10-05T19:04:00Z",
+      "contributed_components": [
+        {
+          "kind": "extensions",
+          "id": "adas",
+          "version": "1.0.0"
+        },
+        {
+          "kind": "presets",
+          "id": "engineering-department",
+          "version": "1.0.0",
+          "priority": 10,
+          "strategy": "prepend"
+        },
+        {
+          "kind": "presets",
+          "id": "adas-product",
+          "version": "1.0.0",
+          "priority": 20,
+          "strategy": "append"
+        }
+      ]
+    }
+  ]
+}

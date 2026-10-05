@@ -1,0 +1,20 @@
+schema_version: "1.0"
+preset:
+  id: adas-product
+  name: ADAS end-to-end toolchain
+  version: "1.0.0"
+  description: Shared architecture and data contracts across an ADAS development toolchain.
+  author: Bosch demo authors
+  license: LicenseRef-Demo
+requires:
+  speckit_version: "==1.1.0"
+provides:
+  templates:
+    - type: template
+      name: spec-template
+      file: templates/spec-addendum.md
+      strategy: append
+    - type: template
+      name: plan-template
+      file: templates/plan-addendum.md
+      strategy: append

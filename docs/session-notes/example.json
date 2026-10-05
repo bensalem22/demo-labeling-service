@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "feature": "001-validate-bounding-boxes",
+  "approved_for_sharing": false,
+  "context": "Synthetic example only. Replace with observed implementation evidence.",
+  "decision": "Use half-open pixel-edge coordinates as required by ADR-0001.",
+  "rationale": "The contract must agree across labeling and dataset adapters.",
+  "alternatives": ["Inclusive pixel indices would need an explicit conversion adapter."],
+  "tests": ["NOT RUN: replace with actual command and observed outcome."],
+  "evidence": ["specs/001-validate-bounding-boxes/demo-brief.md"],
+  "candidate_lesson": "Always test the full-frame and one-pixel edge cases at annotation boundaries.",
+  "scope": "product"
+}

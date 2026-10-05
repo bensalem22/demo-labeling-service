@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "adas": {
+      "id": "adas",
+      "name": "ADAS requirements and learning",
+      "version": "1.0.0",
+      "description": "Read-only DOORS discovery and reviewed session learning for an ADAS toolchain.",
+      "author": "Bosch demo authors",
+      "license": "LicenseRef-Demo",
+      "repository": "https://github.com/demo-owner/adas-governance",
+      "download_url": "http://127.0.0.1:49172/adas-1.0.0.zip",
+      "sha256": "60b8f1781088dad1e9226896bc3837c8943025de37682b33f30be56afe594e5a",
+      "requires": {
+        "speckit_version": "==1.1.0"
+      }
+    }
+  }
+}

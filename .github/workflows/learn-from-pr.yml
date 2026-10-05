@@ -1,0 +1,50 @@
+name: Propose lessons from PR evidence
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: read
+  copilot-requests: write
+
+concurrency:
+  group: lessons-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  propose:
+    if: github.event.pull_request.head.repo.full_name == github.repository && !github.event.pull_request.draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+      - name: Collect PR data without executing PR-head code
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python tools/lessons.py collect --repository "$REPOSITORY" --pr "$PR_NUMBER" --output "$RUNNER_TEMP/evidence.json"
+      - name: Install pinned documentation agent runtime
+        run: npm install --global @github/copilot@1.0.91
+      - name: Propose lessons with tools disabled
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python tools/lessons.py run --evidence "$RUNNER_TEMP/evidence.json" --output "$RUNNER_TEMP/lesson-proposal.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lesson-proposal-pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}
+          path: ${{ runner.temp }}/lesson-proposal.json
+          if-no-files-found: error
+          retention-days: 7
+      - name: Explain human review boundary
+        run: echo "Lesson proposal generated. Download the artifact, verify evidence and redact it before a governance PR. Nothing was merged or promoted automatically." >> "$GITHUB_STEP_SUMMARY"
