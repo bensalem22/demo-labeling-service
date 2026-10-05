@@ -1,0 +1,18 @@
+{
+  "frame_id": "",
+  "frame_width": false,
+  "frame_height": 1080,
+  "annotation_revision": 1,
+  "schema_version": "2.0",
+  "coordinate_space": "pixel_edges",
+  "ontology": "OTHER",
+  "class_label": "bus",
+  "extra_top": "unchanged",
+  "box": {
+    "x_min": 1.5,
+    "y_min": 0,
+    "x_max": 1,
+    "y_max": 1,
+    "extra": 4
+  }
+}

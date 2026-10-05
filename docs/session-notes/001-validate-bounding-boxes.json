@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "feature": "001-validate-bounding-boxes",
+  "approved_for_sharing": true,
+  "context": "Synthetic ADAS labeling-service demo. Submitted annotations needed one explicit, immutable validation boundary so ambiguous coordinates, provenance and ontology metadata do not enter later labeling workflows.",
+  "decision": "Implement a Python standard-library validator for schema 1.0 annotations using integer half-open pixel-edge coordinates. Accept right and bottom endpoints equal to frame width and height, including the complete frame and lower-right one-pixel box. Reject invalid inputs with deterministic code-and-field errors carried by AnnotationValidationError without mutating input.",
+  "rationale": "ADR-0001 and ADAS-LBL-001 revision 3 define half-open pixel edges and make W/H valid endpoints. ADAS-LBL-002 revision 2 requires input provenance, while revision history and dataset release remain deferred. ADAS-LBL-003 revision 1 fixes the ontology and allowed classes. A pure standard-library function keeps this feature limited to validation and makes boundary behavior directly testable.",
+  "alternatives": [
+    "Inclusive pixel indices were not selected because they conflict with ADR-0001 and create off-by-one adapter risk.",
+    "Normalized or fractional coordinates were not selected because the approved contract requires integer pixel edges and forbids silent rounding or conversion.",
+    "Third-party validation packages and web frameworks were not selected because the feature requires no dependency, transport or persistence layer."
+  ],
+  "tests": [
+    "PRE-IMPLEMENTATION RED: .\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v -> 1 test-module import error because the planned public validation types were not yet implemented.",
+    "PASS: .\\.venv\\Scripts\\python.exe -m unittest discover -s tests -v -> 37 tests run in 0.011s; 0 failures and 0 errors.",
+    "PASS: .\\.venv\\Scripts\\python.exe -c \"from labeling_service import validate_annotation, AnnotationValidationError; print('import ok')\" -> printed import ok."
+  ],
+  "evidence": [
+    "specs/001-validate-bounding-boxes/spec.md",
+    "specs/001-validate-bounding-boxes/plan.md",
+    "specs/001-validate-bounding-boxes/tasks.md",
+    "specs/001-validate-bounding-boxes/contracts/validation.md",
+    ".specify/presets/adas-product/adrs/0001-bounding-box-contract.md",
+    "labeling_service/validation.py",
+    "tests/test_validation.py"
+  ],
+  "candidate_lesson": "Adapter-facing annotation contracts should state half-open edge semantics explicitly and test both the complete-frame box and the lower-right one-pixel box so valid W/H endpoints are not rejected.",
+  "scope": "product"
+}

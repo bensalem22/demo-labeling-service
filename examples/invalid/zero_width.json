@@ -1,0 +1,16 @@
+{
+  "frame_id": "synthetic-frame-zero-width",
+  "frame_width": 1920,
+  "frame_height": 1080,
+  "annotation_revision": 1,
+  "schema_version": "1.0",
+  "coordinate_space": "pixel_edges",
+  "ontology": "DEMO-ROAD-USERS-1",
+  "class_label": "truck",
+  "box": {
+    "x_min": 10,
+    "y_min": 10,
+    "x_max": 10,
+    "y_max": 20
+  }
+}
