@@ -223,6 +223,22 @@ def validate_proposal(proposal: dict, evidence: dict) -> None:
             raise ValueError("Every lesson needs exact references to supplied evidence.")
 
 
+def agent_failure_hint(stderr: str) -> str:
+    diagnostic = stderr.casefold()
+    if "invalid --deny-tool value" in diagnostic or "invalid rule format" in diagnostic:
+        return "CLI_PERMISSION_RULE: Copilot rejected a tool permission rule; check the pinned CLI syntax."
+    if any(text in diagnostic for text in ("unknown option", "unexpected argument", "unrecognized option")):
+        return "CLI_ARGUMENT: Copilot rejected a command-line option; check compatibility with the pinned CLI."
+    if any(text in diagnostic for text in (
+        "no authentication information", "authentication failed", "failed to authenticate",
+        "invalid token", "unauthorized",
+    )):
+        return "COPILOT_AUTH: Copilot reported an authentication failure; check the workflow token and entitlement."
+    if "copilot-requests" in diagnostic or "forbidden" in diagnostic:
+        return "COPILOT_ACCESS: Check copilot-requests permission and organization Copilot CLI billing policy."
+    return "CLI_FAILURE_UNKNOWN: The CLI error did not match a safe diagnostic category."
+
+
 def run_agent(evidence: dict, agent_file: Path, executable: str) -> dict:
     prompt = build_prompt(evidence)
     prompt_bytes = len(prompt.encode("utf-8"))
@@ -242,7 +258,9 @@ def run_agent(evidence: dict, agent_file: Path, executable: str) -> dict:
         try:
             result = subprocess.run(
                 [executable, "--agent=lessons-curator", "--silent", "--disable-builtin-mcps",
-                 "--deny-tool=*", "--no-ask-user", "--no-custom-instructions",
+                 "--excluded-tools=skill", "--excluded-tools=sql",
+                 "--deny-tool=shell", "--deny-tool=write", "--deny-tool=url",
+                 "--no-ask-user", "--no-custom-instructions",
                  "--no-auto-update", "--add-dir", str(root), "-p", prompt],
                 cwd=root, env=environment, text=True, encoding="utf-8",
                 capture_output=True, timeout=240, check=False,
@@ -254,8 +272,8 @@ def run_agent(evidence: dict, agent_file: Path, executable: str) -> dict:
             ) from None
         if result.returncode:
             raise RuntimeError(
-                f"Documentation agent failed (exit {result.returncode}). Check Copilot "
-                "authentication, organization policy and CLI compatibility. Command "
+                f"Documentation agent failed (exit {result.returncode}). "
+                f"{agent_failure_hint(result.stderr)} Command "
                 "and output omitted to keep PR evidence out of logs."
             )
     proposal = json.loads(result.stdout)

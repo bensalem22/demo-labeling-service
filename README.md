@@ -100,3 +100,15 @@ out the base SHA. Trigger a new PR event after merging it; rerunning the old fai
 run still uses its old base commit. The original governance release/lock stays
 unchanged, so its bootstrap will report this reviewed local hotfix as managed-file
 drift until it is incorporated in a new release and migration.
+
+## Documentation-agent startup
+
+The corrected CLI invocation uses supported `shell`, `write` and `url` denial
+rules, not `--deny-tool=*` (which Copilot CLI 1.0.91 rejects before agent startup).
+The custom agent retains `tools: []`; built-in MCPs and automatic `skill`/`sql`
+tools are disabled. An offline real-CLI test in the governance repository checks
+that no tools are exposed.
+
+Failures report fixed diagnostic categories instead of raw output, so PR content
+and credentials stay out of logs. Deploy this correction to the PR base branch
+and trigger a new PR event before expecting the workflow to use it.
