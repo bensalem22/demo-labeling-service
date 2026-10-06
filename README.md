@@ -42,6 +42,27 @@ Inspect synthetic inputs under [examples/](examples/). See the
 and [validation quickstart](specs/001-validate-bounding-boxes/quickstart.md) for
 the exact interface and acceptance scenarios.
 
+### Validated box area
+
+`calculate_box_area` reuses the annotation validator and propagates its named
+errors unchanged. This synthetic example prints `2073600`:
+
+```python
+import json
+from pathlib import Path
+
+from labeling_service import calculate_box_area
+
+annotation = json.loads(
+    Path("examples/valid/full_image.json").read_text(encoding="utf-8")
+)
+print(calculate_box_area(annotation))
+```
+
+See the [box-area contract](specs/002-box-area/contracts/box-area.md) and
+[box-area quickstart](specs/002-box-area/quickstart.md) for the exact interface
+and focused test command.
+
 ## Local specialization
 
 Edit the service constitution source, not the generated effective constitution.
@@ -79,3 +100,15 @@ out the base SHA. Trigger a new PR event after merging it; rerunning the old fai
 run still uses its old base commit. The original governance release/lock stays
 unchanged, so its bootstrap will report this reviewed local hotfix as managed-file
 drift until it is incorporated in a new release and migration.
+
+## Documentation-agent startup
+
+The corrected CLI invocation uses supported `shell`, `write` and `url` denial
+rules, not `--deny-tool=*` (which Copilot CLI 1.0.91 rejects before agent startup).
+The custom agent retains `tools: []`; built-in MCPs and automatic `skill`/`sql`
+tools are disabled. An offline real-CLI test in the governance repository checks
+that no tools are exposed.
+
+Failures report fixed diagnostic categories instead of raw output, so PR content
+and credentials stay out of logs. Deploy this correction to the PR base branch
+and trigger a new PR event before expecting the workflow to use it.
